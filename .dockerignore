@@ -1,0 +1,17 @@
+# Docker
+Dockerfile
+.dockerignore
+
+# Dependencies
+**/node_modules
+node_modules
+**/npm-debug.log
+npm-debug.log
+**/vendor
+vendor
+
+#others
+build
+.env
+.gitignore
+.git

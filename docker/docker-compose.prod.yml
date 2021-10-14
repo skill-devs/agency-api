@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  skill-devs:
+    stdin_open: true
+    tty: true
+    container_name: skill-devs
+    image: rzlams/agency
+    restart: always
+    working_dir: /app
+    env_file:
+      - ../.env
+    environment:
+      - VIRTUAL_HOST=skill-devs.shop
+      - VIRTUAL_PORT=4000
+    depends_on:
+      - postgres
+    networks:
+      - skill-devs
+
+  nginx:
+    stdin_open: true
+    tty: true
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    depends_on:
+      - skill-devs
+    environment:
+      - DEFAULT_HOST=${DEFAULT_HOST}
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - skill-devs
