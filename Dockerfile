@@ -25,6 +25,8 @@ ENV NODE_ENV production
 # Reinstall dependencies without devDependencies
 # RUN rm -rf node_modules
 # RUN yarn install --production
+# build project
+RUN yarn run build
 # Expose port
 EXPOSE 4000
 # Start the app
