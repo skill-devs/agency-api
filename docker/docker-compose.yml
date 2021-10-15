@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13.4-alpine
+    container_name: postgres
+    restart: always
+    env_file:
+      - ../.env
+    volumes:
+      - ./agency-postgres-volume:/var/lib/postgresql/data
+    networks:
+      - skill-devs
+
+  adminer:
+    image: adminer
+    restart: always
+    env_file:
+      - ../.env
+    environment:
+      - VIRTUAL_HOST=adminer.skill-devs.shop
+      - VIRTUAL_PORT=8080
+    networks:
+      - skill-devs
+
+networks:
+  skill-devs:
+    driver: bridge

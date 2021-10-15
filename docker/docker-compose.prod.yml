@@ -5,7 +5,7 @@ services:
     stdin_open: true
     tty: true
     container_name: skill-devs
-    image: rzlams/agency
+    image: rzlams/agency-api
     restart: always
     working_dir: /app
     env_file:
@@ -24,10 +24,10 @@ services:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy
     restart: always
+    env_file:
+      - ../.env
     depends_on:
       - skill-devs
-    environment:
-      - DEFAULT_HOST=${DEFAULT_HOST}
     ports:
       - 80:80
     volumes:

@@ -1,26 +1,22 @@
 version: '3.8'
 
 services:
-  postgres:
-    image: postgres:13.4-alpine
-    container_name: postgres
+  skill-devs:
+    stdin_open: true
+    tty: true
+    container_name: skill-devs
+    image: skill-devs
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      target: development
     restart: always
+    working_dir: /app
     env_file:
       - ../.env
     volumes:
-      - ./agency-postgres-volume:/var/lib/postgresql/data
+      - ../src:/app/src:ro
+    ports:
+      - 4000:4000
     networks:
       - skill-devs
-
-  adminer:
-    image: adminer
-    restart: always
-    environment:
-      - VIRTUAL_HOST=${ADMINER_VIRTUAL_HOST}
-      - VIRTUAL_PORT=${ADMINER_VIRTUAL_PORT}
-    networks:
-      - skill-devs
-
-networks:
-  skill-devs:
-    driver: bridge
