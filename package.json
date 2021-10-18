@@ -10,6 +10,7 @@
     "dev:docker:down": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml down",
     "prod:docker": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up -d",
     "prod:docker:down": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml down",
+    "pull:docker": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml pull skill-devs",
     "start": "node ./dist/app.js",
     "build": "rimraf dist && tsc -p .",
     "lint": "eslint --color --ext .ts --ext .js src/",
