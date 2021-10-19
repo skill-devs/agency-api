@@ -6,16 +6,20 @@
   "scripts": {
     "test": "jest",
     "dev": "nodemon --watch ./src ./src/app.ts",
-    "dev:docker": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d --build --force-recreate",
-    "dev:docker:down": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml down",
-    "prod:docker": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up -d",
-    "prod:docker:down": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml down",
-    "prod:docker:update": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml pull skill-devs && yarn run prod:docker:down && yarn run prod:docker",
     "start": "node ./dist/app.js",
     "build": "rimraf dist && tsc -p .",
     "lint": "eslint --color --ext .ts --ext .js src/",
     "lint:fix": "eslint --fix --color --ext .ts --ext .js src/",
-    "db": "./node_modules/db-migrate/bin/db-migrate -m src/database"
+    "db": "./node_modules/db-migrate/bin/db-migrate -m src/database",
+    "dev:docker": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -f docker/docker-compose.adminer.yml up -d --build --force-recreate",
+    "dev:docker:down": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml -f docker/docker-compose.adminer.yml down",
+    "prod:docker": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up -d",
+    "prod:docker:down": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml down",
+    "prod:docker:update": "sudo docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml pull skilldevs && yarn run prod:docker:down && yarn run prod:docker",
+    "prod:adminer": "sudo docker-compose -f docker/docker-compose.adminer.yml up -d",
+    "prod:adminer:down": "sudo docker-compose -f docker/docker-compose.adminer.yml down",
+    "prod:datamed": "sudo docker-compose -f docker/datamed/docker-compose.yml up -d",
+    "prod:datamed:down": "sudo docker-compose -f docker/datamed/docker-compose.yml down"
   },
   "_moduleAliases": {
     "@controllers": "dist/controllers",

@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13.4-alpine
+    container_name: postgres
+    restart: always
+    env_file:
+      - ../.env
+    volumes:
+      - ./datamed-postgres-volume:/var/lib/postgresql/data
+    networks:
+      - skilldevs
+
+  datamed-api:
+    stdin_open: true
+    tty: true
+    container_name: datamed-api
+    image: rzlams/datamed-api
+    restart: always
+    working_dir: /app
+    env_file:
+      - ./.env
+    environment:
+      - VIRTUAL_HOST=datamed-api.skilldevs.shop
+      - VIRTUAL_PORT=4000
+    depends_on:
+      - postgres
+    networks:
+      - skilldevs
+
+  datamed-web:
+    stdin_open: true
+    tty: true
+    container_name: datamed-web
+    restart: always
+    image: rzlams/datamed-web
+    environment:
+      - VIRTUAL_HOST=datamed.skilldevs.shop
+      - VIRTUAL_PORT=80
+    networks:
+      - skilldevs
+
+networks:
+  skilldevs:
+    driver: bridge

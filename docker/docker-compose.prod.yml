@@ -1,22 +1,22 @@
 version: '3.8'
 
 services:
-  skill-devs:
+  skilldevs:
     stdin_open: true
     tty: true
-    container_name: skill-devs
+    container_name: skilldevs
     image: rzlams/agency-api
     restart: always
     working_dir: /app
     env_file:
       - ../.env
     environment:
-      - VIRTUAL_HOST=skill-devs.shop
+      - VIRTUAL_HOST=skilldevs.shop
       - VIRTUAL_PORT=4000
     depends_on:
       - postgres
     networks:
-      - skill-devs
+      - skilldevs
 
   nginx:
     stdin_open: true
@@ -27,10 +27,10 @@ services:
     env_file:
       - ../.env
     depends_on:
-      - skill-devs
+      - skilldevs
     ports:
       - 80:80
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     networks:
-      - skill-devs
+      - skilldevs
