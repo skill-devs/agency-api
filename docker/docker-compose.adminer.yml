@@ -7,7 +7,7 @@ services:
     env_file:
       - ../.env
     environment:
-      - VIRTUAL_HOST=adminer.skilldevs.shop
+      - VIRTUAL_HOST=adminer.skilldevs.shop,www.adminer.skilldevs.shop
       - VIRTUAL_PORT=8080
     networks:
       - docker_skilldevs

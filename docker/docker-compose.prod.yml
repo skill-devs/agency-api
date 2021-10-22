@@ -11,17 +11,19 @@ services:
     env_file:
       - ../.env
     environment:
-      - VIRTUAL_HOST=skilldevs.shop
+      - VIRTUAL_HOST=skilldevs.shop,www.skilldevs.shop
       - VIRTUAL_PORT=4000
+      - LETSENCRYPT_HOST=skilldevs.shop,www.skilldevs.shop
+      - LETSENCRYPT_EMAIL=skilldevs.shop@gmail.com
     depends_on:
       - postgres
     networks:
       - skilldevs
 
-  nginx:
+  nginx-proxy:
     stdin_open: true
     tty: true
-    image: jwilder/nginx-proxy
+    image: jwilder/nginx-proxy:alpine
     container_name: nginx-proxy
     restart: always
     env_file:
@@ -30,7 +32,27 @@ services:
       - skilldevs
     ports:
       - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:ro
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+    networks:
+      - skilldevs
+
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    container_name: letsencrypt
+    restart: always
+    depends_on:
+      - nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:rw
+    volumes_from:
+      - nginx-proxy:rw
     networks:
       - skilldevs
