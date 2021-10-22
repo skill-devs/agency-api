@@ -19,7 +19,8 @@
     "prod:adminer": "sudo docker-compose -f docker/docker-compose.adminer.yml up -d",
     "prod:adminer:down": "sudo docker-compose -f docker/docker-compose.adminer.yml down",
     "prod:datamed": "sudo docker-compose -f docker/datamed/docker-compose.yml up -d",
-    "prod:datamed:down": "sudo docker-compose -f docker/datamed/docker-compose.yml down"
+    "prod:datamed:down": "sudo docker-compose -f docker/datamed/docker-compose.yml down",
+    "prod:datamed:update": "sudo docker-compose -f docker/datamed/docker-compose.yml pull datamed-api && sudo docker-compose -f docker/datamed/docker-compose.yml pull datamed-web && yarn run prod:datamed:down && yarn run prod:datamed"
   },
   "_moduleAliases": {
     "@controllers": "dist/controllers",
