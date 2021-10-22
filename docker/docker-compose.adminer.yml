@@ -10,4 +10,8 @@ services:
       - VIRTUAL_HOST=adminer.skilldevs.shop
       - VIRTUAL_PORT=8080
     networks:
-      - skilldevs
+      - docker_skilldevs
+
+networks:
+  docker_skilldevs:
+    external: true
